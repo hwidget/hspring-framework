@@ -23,12 +23,12 @@
     </batch:job>
 
 
-    <bean id="mySkipPolicy" class="com.ryan.spring.skippolicy.MySkipPolicy"/>
+    <bean id="mySkipPolicy" class="com.ryan.spring.batch.skippolicy.MySkipPolicy"/>
     <bean id="csvItemProcessor" class="com.ryan.spring.batch.processor.CsvItemProcessor"/>
 
 
     <bean id="csvItemReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
-        <property name="resource" value="classpath:data/inputFile.csv"/>
+        <property name="resource" value="classpath:datadir/inputFile.csv"/>
         <property name="lineMapper">
             <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
                 <property name="lineTokenizer" ref="lineTokenizer"/>

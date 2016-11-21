@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="jedisConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="100000"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="maxWaitMillis" value="10000"/>
+    </bean>
+
+
+    <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="database" value="0"/>
+        <property name="poolConfig" ref="jedisConfig" />
+        <property name="usePool" value="true"/>
+        <property name="port" value="6379" />
+        <property name="hostName" value="127.0.0.1" />
+        <property name="timeout" value="3000" />
+    </bean>
+
+    <!--  哨兵方式配置Factory -->
+    <!--<bean id="redisSentinelConf" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">-->
+        <!--<property name="master" value="127.0.0.1:6379"/>-->
+        <!--<property name="sentinels">-->
+            <!--<set>-->
+                <!--<value type="java.lang.String">127.0.0.1:6380</value>-->
+                <!--<value type="java.lang.String">127.0.0.1:6381</value>-->
+            <!--</set>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!-- redis template definition -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnFactory"/>
+    </bean>
+
+
+</beans>

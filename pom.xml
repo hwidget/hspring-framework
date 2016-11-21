@@ -167,10 +167,14 @@
         <log4j.version>2.5</log4j.version>
 
         <spring.core.version>4.3.4.RELEASE</spring.core.version>
-        <spring.data.commons.version>1.12.5.RELEASE</spring.data.commons.version>
         <spring.batch.version>3.0.7.RELEASE</spring.batch.version>
         <spring.gemfire.version>1.8.5.RELEASE</spring.gemfire.version>
         <spring.oxm.version>3.2.2.RELEASE</spring.oxm.version>
+
+        <spring.data.jpa.version>1.10.5.RELEASE</spring.data.jpa.version>
+        <spring.data.commons.version>1.12.5.RELEASE</spring.data.commons.version>
+        <spring.data.jpa.redis.version>1.7.5.RELEASE</spring.data.jpa.redis.version>
+
 
 
         <druid.version>1.0.9</druid.version>
@@ -219,6 +223,11 @@
             <artifactId>spring-core</artifactId>
             <version>${spring.core.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.core.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -237,6 +246,22 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+
+        <!--=============================================== Spring data jpa =========================================================-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring.data.jpa.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>${spring.data.jpa.redis.version}</version>
+        </dependency>
+
+
 
         <!--=============================================== Spring Batch =========================================================-->
         <dependency>
@@ -265,6 +290,23 @@
             </exclusions>
         </dependency>
 
+
+
+
+
+
+
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.4.2</version>
+        </dependency>
     </dependencies>
 
 
