@@ -11,11 +11,19 @@
     <batch:job id="csvFileJob">
         <batch:step id="csvStep">
             <tasklet transaction-manager="transactionManager">
-                <chunk reader="csvItemReader" writer="csvItemWriter" processor="csvItemProcessor" commit-interval="1"></chunk>
+                <chunk reader="csvItemReader" writer="csvItemWriter" processor="csvItemProcessor" commit-interval="1" skip-policy="mySkipPolicy">
+                    <skippable-exception-classes>
+                        <include class="org.springframework.batch.item.file.FlatFileParseException"/>
+                        <include class="java.lang.Exception"/>
+                        <exclude class="java.io.FileNotFoundException"/>
+                    </skippable-exception-classes>
+                </chunk>
             </tasklet>
         </batch:step>
     </batch:job>
 
+
+    <bean id="mySkipPolicy" class="com.ryan.spring.skippolicy.MySkipPolicy"/>
     <bean id="csvItemProcessor" class="com.ryan.spring.batch.processor.CsvItemProcessor"/>
 
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<student>
+		<uid>SN001</uid>
+		<uname>test</uname>
+		<age>22</age>
+		<score>89</score>		
+	</student>
+</root>

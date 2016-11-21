@@ -166,8 +166,16 @@
         <junit.version>4.12</junit.version>
         <log4j.version>2.5</log4j.version>
 
+        <spring.core.version>4.3.4.RELEASE</spring.core.version>
+        <spring.data.commons.version>1.12.5.RELEASE</spring.data.commons.version>
         <spring.batch.version>3.0.7.RELEASE</spring.batch.version>
         <spring.gemfire.version>1.8.5.RELEASE</spring.gemfire.version>
+        <spring.oxm.version>3.2.2.RELEASE</spring.oxm.version>
+
+
+        <druid.version>1.0.9</druid.version>
+
+
 
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -194,11 +202,53 @@
             <version>${log4j.version}</version>
         </dependency>
 
+        <!-- ===================================================================================================================== -->
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+
+
+
+        <!--=============================================== Spring Framework =========================================================-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.oxm</artifactId>
+            <version>${spring.oxm.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!--=============================================== Spring Batch =========================================================-->
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-integration</artifactId>
             <version>${spring.batch.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
@@ -207,6 +257,12 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-gemfire</artifactId>
             <version>${spring.gemfire.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>

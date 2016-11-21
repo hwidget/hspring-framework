@@ -3,11 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:int="http://www.springframework.org/schema/integration"
        xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:batch-int="http://www.springframework.org/schema/batch-integration"
        xsi:schemaLocation="http://www.springframework.org/schema/batch-integration
     http://www.springframework.org/schema/batch-integration/spring-batch-integration.xsd
     http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
     http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd">
 
 

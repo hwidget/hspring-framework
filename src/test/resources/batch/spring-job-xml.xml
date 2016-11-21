@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <import resource="spring-batch.xml"/>
+
+
+    <batch:job id="xmlFileReadAndWriterJob">
+        <batch:step id="xmlFileReadAndWriterStep">
+            <batch:tasklet>
+                <batch:chunk reader="xmlReader" writer="xmlWriter" processor="xmlProcessor" commit-interval="10">
+                    <skippable-exception-classes>
+                        <include class="org.springframework.batch.item.file.FlatFileParseException"/>
+                        <include class="java.lang.Exception"/>
+                        <exclude class="java.io.FileNotFoundException"/>
+                    </skippable-exception-classes>
+                </batch:chunk>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+
+
+    <!-- XML文件读取 -->
+    <bean id="xmlReader" class="org.springframework.batch.item.xml.StaxEventItemReader" scope="step">
+        <property name="fragmentRootElementName" value="student"/>
+        <property name="unmarshaller" ref="tradeMarshaller"/>
+        <property name="resource" value="file:#{jobParameters['inputFilePath']}"></property>
+    </bean>
+
+    <!-- XML文件写入 -->
+    <bean id="xmlWriter" class="org.springframework.batch.item.xml.StaxEventItemWriter" scope="step">
+        <property name="rootTagName" value="root"/>
+        <property name="marshaller" ref="tradeMarshaller"/>
+        <property name="resource" value="file:#{jobParameters['outputFilePath']}"/>
+    </bean>
+
+    <bean id="tradeMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+        <property name="aliases">
+            <util:map id="aliases">
+                <entry key="student" value="com.ryan.spring.entity.Student"/>
+                <entry key="buyDay" value="java.util.Date"></entry>
+            </util:map>
+        </property>
+    </bean>
+
+    <bean id="xmlProcessor" class="com.ryan.spring.batch.processor.XmlItemProcessor" />
+
+</beans>
