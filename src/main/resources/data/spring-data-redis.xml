@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:redis="http://www.springframework.org/schema/redis"
        xmlns:batch="http://www.springframework.org/schema/batch"
        xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
-    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       http://www.springframework.org/schema/redis http://www.springframework.org/schema/redis/spring-redis.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
     <bean id="jedisConfig" class="redis.clients.jedis.JedisPoolConfig">
@@ -16,23 +18,70 @@
 
     <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <property name="database" value="0"/>
-        <property name="poolConfig" ref="jedisConfig" />
+        <property name="poolConfig" ref="jedisConfig"/>
         <property name="usePool" value="true"/>
-        <property name="port" value="6379" />
-        <property name="hostName" value="127.0.0.1" />
-        <property name="timeout" value="3000" />
+        <property name="port" value="6379"/>
+        <property name="hostName" value="127.0.0.1"/>
+        <property name="timeout" value="3000"/>
     </bean>
 
     <!--  哨兵方式配置Factory -->
     <!--<bean id="redisSentinelConf" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">-->
-        <!--<property name="master" value="127.0.0.1:6379"/>-->
-        <!--<property name="sentinels">-->
-            <!--<set>-->
-                <!--<value type="java.lang.String">127.0.0.1:6380</value>-->
-                <!--<value type="java.lang.String">127.0.0.1:6381</value>-->
-            <!--</set>-->
-        <!--</property>-->
+    <!--<property name="master" value="127.0.0.1:6379"/>-->
+    <!--<property name="sentinels">-->
+    <!--<set>-->
+    <!--<value type="java.lang.String">127.0.0.1:6380</value>-->
+    <!--<value type="java.lang.String">127.0.0.1:6381</value>-->
+    <!--</set>-->
+    <!--</property>-->
     <!--</bean>-->
+
+
+    <!--Redis Cluster 配置方式-->
+    <bean id="jedisClusterConfig" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
+        <property name="clusterNodes">
+            <set>
+                <bean class="org.springframework.data.redis.connection.RedisClusterNode">
+                    <constructor-arg name="host" value="127.0.0.1"></constructor-arg>
+                    <constructor-arg name="port" value="6379"></constructor-arg>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisClusterNode">
+                    <constructor-arg name="host" value="127.0.0.1"></constructor-arg>
+                    <constructor-arg name="port" value="6380"></constructor-arg>
+                </bean>
+            </set>
+        </property>
+        <property name="maxRedirects" value="2"/>
+    </bean>
+
+
+
+
+
+    <!--<bean id="jedisClusterConnFactory" class="org.springframework.data.redis.connection.jedis.JedisClusterConnection">-->
+        <!--<constructor-arg name="cluster" ref="jedisCluster"/>-->
+    <!--</bean>-->
+
+
+
+    <bean id="messageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
+        <constructor-arg>
+            <bean class="com.ryan.spring.data.redis.pubsub.DefaultMessageDelegate"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="redisContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
+        <property name="connectionFactory" ref="jedisConnFactory"/>
+        <property name="messageListeners">
+            <map>
+                <entry key-ref="messageListener">
+                    <bean class="org.springframework.data.redis.listener.ChannelTopic">
+                        <constructor-arg value="1" />
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
 
     <!-- redis template definition -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
