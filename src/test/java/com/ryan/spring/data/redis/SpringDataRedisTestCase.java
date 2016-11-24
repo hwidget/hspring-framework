@@ -5,13 +5,19 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.core.script.RedisScript;
+import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -107,6 +113,36 @@ public class SpringDataRedisTestCase {
         });
 
         System.out.println("Number of items added to set: " + txResults.get(0));
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    @Test
+    public void testRedisPiplined() throws Exception {
+        redisTemplate.executePipelined(new SessionCallback<String>() {
+            public <K, V> String execute(RedisOperations<K, V> operations) throws DataAccessException {
+
+
+                return null;
+            }
+        });
+
+    }
+
+    @Test
+    public void testRedisLua() throws Exception {
+
+        DefaultRedisScript<Boolean> redisScript = new DefaultRedisScript<Boolean>();
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("META-INF/scripts/checkandset.lua")));
+        redisScript.setResultType(Boolean.class);
+
+
+        String expectedValue = "test";
+        String newValue = "";
+
+        redisTemplate.execute(redisScript, Collections.singletonList("key"), expectedValue, newValue);
 
     }
 }
