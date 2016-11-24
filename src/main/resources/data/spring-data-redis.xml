@@ -3,9 +3,11 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:redis="http://www.springframework.org/schema/redis"
        xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
        http://www.springframework.org/schema/redis http://www.springframework.org/schema/redis/spring-redis.xsd
+       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
@@ -55,13 +57,9 @@
     </bean>
 
 
-
-
-
     <!--<bean id="jedisClusterConnFactory" class="org.springframework.data.redis.connection.jedis.JedisClusterConnection">-->
-        <!--<constructor-arg name="cluster" ref="jedisCluster"/>-->
+    <!--<constructor-arg name="cluster" ref="jedisCluster"/>-->
     <!--</bean>-->
-
 
 
     <bean id="messageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
@@ -76,7 +74,7 @@
             <map>
                 <entry key-ref="messageListener">
                     <bean class="org.springframework.data.redis.listener.ChannelTopic">
-                        <constructor-arg value="1" />
+                        <constructor-arg value="1"/>
                     </bean>
                 </entry>
             </map>
@@ -88,5 +86,13 @@
         <property name="connectionFactory" ref="jedisConnFactory"/>
     </bean>
 
+
+    <!-- turn on declarative caching -->
+    <cache:annotation-driven/>
+
+    <!-- declare Redis Cache Manager -->
+    <bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+        <constructor-arg name="redisOperations" ref="redisTemplate" />
+    </bean>
 
 </beans>

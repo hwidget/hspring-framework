@@ -176,6 +176,12 @@
         <spring.data.jpa.version>1.10.5.RELEASE</spring.data.jpa.version>
         <spring.data.commons.version>1.12.5.RELEASE</spring.data.commons.version>
         <spring.data.jpa.redis.version>1.7.5.RELEASE</spring.data.jpa.redis.version>
+        <spring.data.neo4j.version>4.1.5.RELEASE</spring.data.neo4j.version>
+        <spring.data.hadoop.version>2.4.0.RELEASE</spring.data.hadoop.version>
+        <spring.kafka.version>1.1.1.RELEASE</spring.kafka.version>
+
+        <neo4j.ogm.version>2.1.0-M01</neo4j.ogm.version>
+
 
 
 
@@ -278,6 +284,9 @@
         </dependency>
 
 
+
+
+
         <!--=============================================== Spring data jpa =========================================================-->
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -321,6 +330,42 @@
         </dependency>
 
 
+
+        <!--=============================================== Spring Neo4j =========================================================-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-neo4j</artifactId>
+            <version>${spring.data.neo4j.version}</version>
+        </dependency>
+        <!-- add this dependency if you want to use the embedded driver -->
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-embedded-driver</artifactId>
+            <version>${neo4j.ogm.version}</version>
+        </dependency>
+
+        <!-- add this dependency if you want to use the Bolt driver -->
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-bolt-driver</artifactId>
+            <version>${neo4j.ogm.version}</version>
+        </dependency>
+
+
+        <!--=============================================== Spring Kafka =========================================================-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>${spring.kafka.version}</version>
+        </dependency>
+
+
+        <!--=============================================== Spring Data Hadoop =========================================================-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-hadoop</artifactId>
+            <version>${spring.data.hadoop.version}</version>
+        </dependency>
 
 
 
