@@ -61,6 +61,7 @@
             <releases>
                 <enabled>true</enabled>
                 <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
             </releases>
             <snapshots>
                 <enabled>false</enabled>
@@ -70,6 +71,16 @@
             <id>sonatype-nexus-staging</id>
             <name>Nexus Staging Repository</name>
             <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
         </repository>
         <repository>
             <id>apache-releases</id>
@@ -80,6 +91,8 @@
             </releases>
             <snapshots>
                 <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
             </snapshots>
         </repository>
         <repository>
@@ -91,6 +104,8 @@
             </releases>
             <snapshots>
                 <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
             </snapshots>
         </repository>
         <repository>
@@ -114,6 +129,8 @@
             </releases>
             <snapshots>
                 <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
             </snapshots>
         </repository>
         <repository>
@@ -126,6 +143,8 @@
             </releases>
             <snapshots>
                 <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
             </snapshots>
         </repository>
         <repository>
@@ -186,11 +205,19 @@
         <spring.data.jpa.redis.version>1.7.5.RELEASE</spring.data.jpa.redis.version>
         <spring.data.neo4j.version>4.1.5.RELEASE</spring.data.neo4j.version>
         <spring.data.hadoop.version>2.4.0.RELEASE</spring.data.hadoop.version>
+        <spring.data.elasticsearch.version>2.0.5.RELEASE</spring.data.elasticsearch.version>
         <spring.kafka.version>1.1.1.RELEASE</spring.kafka.version>
+
+
+        <spring.boot.yarn.version>2.4.0.RELEASE-hdp23</spring.boot.yarn.version>
+
+
 
         <neo4j.ogm.version>2.1.0-M01</neo4j.ogm.version>
 
 
+
+        <hbase.version>1.2.4</hbase.version>
 
 
         <druid.version>1.0.9</druid.version>
@@ -343,12 +370,40 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-neo4j</artifactId>
             <version>${spring.data.neo4j.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.neo4j</groupId>
+                    <artifactId>neo4j-ogm-http-driver</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.neo4j</groupId>
+                    <artifactId>neo4j-ogm-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-http-driver</artifactId>
+            <version>${neo4j.ogm.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-core</artifactId>
+            <version>${neo4j.ogm.version}</version>
+        </dependency>
+
+
         <!-- add this dependency if you want to use the embedded driver -->
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-ogm-embedded-driver</artifactId>
             <version>${neo4j.ogm.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>neo4j-cypher-compiler-2.3</artifactId>
+                    <groupId>org.neo4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- add this dependency if you want to use the Bolt driver -->
@@ -373,14 +428,44 @@
             <artifactId>spring-data-hadoop</artifactId>
             <version>${spring.data.hadoop.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>${hbase.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-common</artifactId>
+            <version>${hbase.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
 
         <!--=============================================== Spring Yarn =========================================================-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-yarn-boot</artifactId>
+            <version>${spring.boot.yarn.version}</version>
+        </dependency>
 
 
-
-
-
+        <!--=============================================== Spring Data Elasticsearch =========================================================-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+            <version>${spring.data.elasticsearch.version}</version>
+        </dependency>
 
 
 
@@ -400,11 +485,7 @@
             <artifactId>commons-pool2</artifactId>
             <version>2.4.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.sdyc</groupId>
-            <artifactId>ndetl</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+
     </dependencies>
 
 

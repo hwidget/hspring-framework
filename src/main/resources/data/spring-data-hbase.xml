@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:hdp="http://www.springframework.org/schema/hadoop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	       http://www.springframework.org/schema/beans/spring-beans.xsd
+	       http://www.springframework.org/schema/hadoop
+	       http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
+
+    <hdp:configuration id="hadoopConfiguration"></hdp:configuration>
+
+    <hdp:file-system id="fileSystem" configuration-ref="hadoopConfiguration"/>
+
+    <hdp:hbase-configuration id="hbase-conf" configuration-ref="hadoopConfiguration" properties-location="classpath:data/hbase.properties"/>
+
+
+    <bean id="hbaseTemplate" class="org.springframework.data.hadoop.hbase.HbaseTemplate">
+        <constructor-arg index="0" ref="hbase-conf"/>
+        <property name="tableFactory">
+            <bean class="com.ryan.spring.data.hbase.HBasePoolTableFactory">
+                <constructor-arg name="hbaseConfiguration" ref="hbase-conf" />
+            </bean>
+        </property>
+    </bean>
+</beans>
