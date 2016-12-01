@@ -7,10 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -117,6 +116,8 @@ public class SpringDataRedisTestCase {
     }
 
     /**
+     * Redis piplined
+     *
      * @throws Exception
      */
     @Test
@@ -131,6 +132,11 @@ public class SpringDataRedisTestCase {
 
     }
 
+    /**
+     * Redis Lua 脚本测试
+     *
+     * @throws Exception
+     */
     @Test
     public void testRedisLua() throws Exception {
 
@@ -144,5 +150,60 @@ public class SpringDataRedisTestCase {
 
         redisTemplate.execute(redisScript, Collections.singletonList("key"), expectedValue, newValue);
 
+    }
+
+    /**
+     * Key 超时设置
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testExpire() throws Exception {
+
+        final long time = new Date().getTime() / 1000 + 10;
+
+        final Boolean expireAt = redisTemplate.expireAt("testexpire", new Date(time));
+
+        LOG.info("Expire At : {}", expireAt);
+
+        Thread.sleep(12 * 1000);
+
+        LOG.info("等待10s 后查询是否存在:{}", redisTemplate.hasKey("testexpire"));
+    }
+
+    /**
+     * 查看当前时间
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testCurrDatetime() throws Exception {
+        class Person {
+            private String name;
+            private Integer age;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public Integer getAge() {
+                return age;
+            }
+
+            public void setAge(Integer age) {
+                this.age = age;
+            }
+        }
+
+        final Person person = new Person();
+        person.setName("test");
+        person.setAge(20);
+
+
+        LOG.info("JSON = {}", com.alibaba.fastjson.JSONObject.toJSONString(person));
     }
 }
