@@ -1,4 +1,4 @@
-package com.ryan.spring.entity;
+package com.ryan.spring.data.entity;
 
 /**
  * @author Rayn

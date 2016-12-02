@@ -1,6 +1,6 @@
 package com.ryan.spring.batch.processor;
 
-import com.ryan.spring.entity.Student;
+import com.ryan.spring.data.entity.Student;
 import org.springframework.batch.item.ItemProcessor;
 
 /**

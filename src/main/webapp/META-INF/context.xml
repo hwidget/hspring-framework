@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--配置为分布式session-->
+<Context allowLinking="true">
+    <!--<Valve className="com.radiadesign.catalina.session.RedisSessionHandlerValve"/>
+    <Manager className="com.radiadesign.catalina.session.RedisSessionManager"
+             host="www.crmsocial.cn"
+             port="6379"
+             database="0"
+             password="ajkrcxenk"
+             maxInactiveInterval="60"/>-->
+
+
+</Context>

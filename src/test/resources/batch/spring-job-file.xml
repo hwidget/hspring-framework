@@ -41,7 +41,7 @@
         </property>
     </bean>
 
-    <bean id="student" class="com.ryan.spring.entity.Student"></bean>
+    <bean id="student" class="com.ryan.spring.data.entity.Student"></bean>
 
     <!-- lineTokenizer -->
     <bean id="lineTokenizer" class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">

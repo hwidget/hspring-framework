@@ -224,6 +224,10 @@
         <jetty.version>6.1.24</jetty.version>
 
 
+        <hibernate.version>4.3.10.Final</hibernate.version>
+        <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
+
+
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.project.outputEncoding>UTF-8</project.project.outputEncoding>
@@ -468,6 +472,25 @@
         </dependency>
 
 
+
+
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+
+
+
+        <!-- lazyluke 输出sql-->
+        <dependency>
+            <groupId>org.lazyluke</groupId>
+            <artifactId>log4jdbc-remix</artifactId>
+            <version>0.2.7</version>
+        </dependency>
+        <!-- == End lazyluke == -->
 
         <dependency>
             <groupId>com.alibaba</groupId>

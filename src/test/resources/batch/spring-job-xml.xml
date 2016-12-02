@@ -42,7 +42,7 @@
     <bean id="tradeMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
         <property name="aliases">
             <util:map id="aliases">
-                <entry key="student" value="com.ryan.spring.entity.Student"/>
+                <entry key="student" value="com.ryan.spring.data.entity.Student"/>
                 <entry key="buyDay" value="java.util.Date"></entry>
             </util:map>
         </property>
