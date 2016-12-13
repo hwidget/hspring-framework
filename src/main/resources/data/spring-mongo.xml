@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+           http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:conf/mongo.properties</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <mongo:mongo host="${mongo.host}" port="${mongo.port}">
+        <mongo:options connections-per-host="8"
+                       threads-allowed-to-block-for-connection-multiplier="4"
+                       connect-timeout="${mongo.conn.timeout}"
+                       max-wait-time="1500"
+                       auto-connect-retry="true"
+                       socket-keep-alive="true"
+                       socket-timeout="1500"
+                       slave-ok="true"
+                       write-number="1"
+                       write-timeout="0"
+                       write-fsync="true"/>
+    </mongo:mongo>
+
+    <mongo:mongo id="replicaSetMongo" replica-set="${mongo.host.replica}"/>
+
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg index="0" type="com.mongodb.Mongo" ref="mongo"/>
+        <constructor-arg index="1" type="java.lang.String" value="${mongo.dbname}"/>
+    </bean>
+
+
+    <!--<mongo:db-factory dbname="${mongo.dbname}" mongo-ref="mongo" />-->
+
+    <!--<bean id=" beanFactory" class="org.springframework.data.mongodb.core.MongoClientFactoryBean">-->
+    <!--<property name="host" value="${mongo.host}"/>-->
+    <!--<property name="port" value="${mongo.port}"/>-->
+    <!--</bean>-->
+
+    <!--<mongo:db-factory id="anotherMongoDbFactory" -->
+                      <!--host="localhost"-->
+                      <!--port="27017"-->
+                      <!--dbname="database"-->
+                      <!--username="joe"-->
+                      <!--password="secret" />-->
+</beans>

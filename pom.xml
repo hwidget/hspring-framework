@@ -204,6 +204,7 @@
         <spring.data.commons.version>1.12.5.RELEASE</spring.data.commons.version>
         <spring.data.jpa.redis.version>1.7.5.RELEASE</spring.data.jpa.redis.version>
         <spring.data.neo4j.version>4.1.5.RELEASE</spring.data.neo4j.version>
+        <spring.data.mongo.version>1.9.5.RELEASE</spring.data.mongo.version>
         <spring.data.hadoop.version>2.4.0.RELEASE</spring.data.hadoop.version>
         <spring.data.elasticsearch.version>2.0.5.RELEASE</spring.data.elasticsearch.version>
         <spring.kafka.version>1.1.1.RELEASE</spring.kafka.version>
@@ -343,6 +344,19 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
             <version>${spring.data.jpa.redis.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>${spring.data.mongo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.data</groupId>
+                    <artifactId>spring-data-commons</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
