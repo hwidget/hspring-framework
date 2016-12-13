@@ -1,6 +1,7 @@
 package com.ryan.spring.web.blog.dao;
 
-import com.spring.mvc.blog.dao.entity.CommentsEntity;
+
+import com.ryan.spring.web.blog.dao.entity.CommentsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

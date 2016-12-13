@@ -1,9 +1,9 @@
 package com.ryan.spring.web.blog.service.impl;
 
-import com.spring.mvc.blog.dao.BlogsRepo;
-import com.spring.mvc.blog.dao.entity.BlogsEntity;
-import com.spring.mvc.blog.service.BlogService;
-import com.spring.mvc.blog.vo.Page;
+import com.ryan.spring.web.blog.dao.BlogsRepo;
+import com.ryan.spring.web.blog.dao.entity.BlogsEntity;
+import com.ryan.spring.web.blog.service.BlogService;
+import com.ryan.spring.web.blog.vo.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

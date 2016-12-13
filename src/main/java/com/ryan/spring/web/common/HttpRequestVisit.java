@@ -1,6 +1,5 @@
 package com.ryan.spring.web.common;
 
-import com.spring.mvc.manger.common.utils.RequestIP;
 import eu.bitwalker.useragentutils.UserAgent;
 
 import javax.servlet.http.HttpServletRequest;

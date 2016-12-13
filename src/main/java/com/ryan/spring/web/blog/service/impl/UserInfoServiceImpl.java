@@ -1,8 +1,8 @@
 package com.ryan.spring.web.blog.service.impl;
 
-import com.spring.mvc.blog.dao.UserInfoRepo_;
-import com.spring.mvc.blog.dao.entity.SupplierEntity;
-import com.spring.mvc.blog.service.UserInfoService;
+import com.ryan.spring.web.blog.dao.UserInfoRepo;
+import com.ryan.spring.web.blog.dao.entity.SupplierEntity;
+import com.ryan.spring.web.blog.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
-    private UserInfoRepo_ userInfoRepo;
+    private UserInfoRepo userInfoRepo;
 
     /**
      * 保存用户信息

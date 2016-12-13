@@ -2,27 +2,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:cache="http://www.springframework.org/schema/cache"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-	       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+
 	       http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
 	       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-	       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
-	       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
 
 
-    <import resource="data-source.xml" />
-
+    <import resource="data-source.xml"/>
 
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="dataSource"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.show_sql">true</prop>
@@ -32,7 +27,6 @@
             </props>
         </property>
     </bean>
-
 
 
     <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
@@ -61,11 +55,11 @@
                 <entry key="hibernate.show_sql" value="true"/>
                 <entry key="hibernate.format_sql" value="true"/>
                 <entry key="hibernate.use_sql_comments" value="true"/>
-                <entry key="hibernate.jdbc.batch_size" value="50" />
-                <entry key="hibernate.jdbc.fetch_size" value="50" />
-                <entry key="hibernate.max_fetch_depth" value="50" />
-                <entry key="hibernate.default_batch_fetch_size" value="50" />
-                <entry key="generateDdl" value="false" />
+                <entry key="hibernate.jdbc.batch_size" value="50"/>
+                <entry key="hibernate.jdbc.fetch_size" value="50"/>
+                <entry key="hibernate.max_fetch_depth" value="50"/>
+                <entry key="hibernate.default_batch_fetch_size" value="50"/>
+                <entry key="generateDdl" value="false"/>
             </util:map>
         </property>
     </bean>
@@ -84,14 +78,16 @@
     <!-- Enables the Hibernate @Transactional programming model -->
     <!--<tx:annotation-driven transaction-manager="jpaTransactionManager" />-->
 
-    <jpa:repositories base-package="com.ryan.spring.web" transaction-manager-ref="transactionManager" />
+    <jpa:repositories base-package="com.ryan.spring.web" transaction-manager-ref="transactionManager"/>
 
 
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
     <!--根据注解注入-->
     <context:annotation-config/>
-
-    <context:component-scan base-package="com.ryan.spring.web"/>
+    <context:component-scan base-package="com.ryan.spring.web">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RequestMapping"/>
+    </context:component-scan>
 
 </beans>

@@ -38,6 +38,7 @@
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RequestMapping"/>
     </context:component-scan>
 
+    <import resource="data/spring-data-jpa.xml" />
 
 
     <!--Spring 工厂方式配置 EHCACHE Manager-->

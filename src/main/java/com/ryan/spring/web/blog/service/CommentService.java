@@ -1,6 +1,7 @@
 package com.ryan.spring.web.blog.service;
 
-import com.spring.mvc.blog.dao.entity.CommentsEntity;
+
+import com.ryan.spring.web.blog.dao.entity.CommentsEntity;
 
 /**
  * @author Rayn on 2016/7/2.

@@ -11,7 +11,7 @@
 
     <!-- Context Loader Listener的自定义子类，加载RootApplicationContext -->
     <listener>
-        <listener-class>com.spring.mvc.manger.common.AppContextLoaderListener</listener-class>
+        <listener-class>com.ryan.spring.web.common.AppContextLoaderListener</listener-class>
     </listener>
 
 
@@ -102,7 +102,7 @@
     <!--Spirng mvc servlet -->
     <servlet>
         <servlet-name>spring-mvc</servlet-name>
-        <servlet-class>com.spring.mvc.manger.common.AppDispatcherServlet</servlet-class>
+        <servlet-class>com.ryan.spring.web.common.AppDispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:/spring-mvc-servlet.xml</param-value>

@@ -1,6 +1,6 @@
 package com.ryan.spring.web.blog.dao;
 
-import com.spring.mvc.blog.dao.entity.BlogsEntity;
+import com.ryan.spring.web.blog.dao.entity.BlogsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

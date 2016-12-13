@@ -1,6 +1,7 @@
 package com.ryan.spring.web.blog.service;
 
-import com.spring.mvc.blog.dao.entity.SupplierEntity;
+
+import com.ryan.spring.web.blog.dao.entity.SupplierEntity;
 
 /**
  * @author Rayn
