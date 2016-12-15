@@ -212,7 +212,7 @@
 
         <spring.boot.yarn.version>2.4.0.RELEASE-hdp23</spring.boot.yarn.version>
 
-
+        <querydsl.version>4.1.4</querydsl.version>
 
         <neo4j.ogm.version>2.1.0-M01</neo4j.ogm.version>
 
@@ -340,6 +340,8 @@
             <version>${spring.data.jpa.version}</version>
         </dependency>
 
+
+        <!--=============================================== Spring data Redis =========================================================-->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
@@ -347,6 +349,7 @@
         </dependency>
 
 
+        <!--=============================================== Spring data mongo =========================================================-->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
@@ -357,6 +360,12 @@
                     <artifactId>spring-data-commons</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>bson</artifactId>
+            <version>3.4.0</version>
         </dependency>
 
 
@@ -492,6 +501,23 @@
         </dependency>
 
 
+
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-core</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-mongodb</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql-spring</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
 
 
 

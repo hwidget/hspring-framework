@@ -34,20 +34,32 @@
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg index="0" type="com.mongodb.Mongo" ref="mongo"/>
         <constructor-arg index="1" type="java.lang.String" value="${mongo.dbname}"/>
+
+        <!--<constructor-arg name="mongo" type="com.mongodb.Mongo" ref="mongo"/>-->
+        <!--<constructor-arg name="databaseName" type="java.lang.String" value="${mongo.dbname}"/>-->
+        <!--<constructor-arg name="mongoConverter" ref="readConverter" />-->
     </bean>
 
 
     <!--<mongo:db-factory dbname="${mongo.dbname}" mongo-ref="mongo" />-->
 
-    <!--<bean id=" beanFactory" class="org.springframework.data.mongodb.core.MongoClientFactoryBean">-->
-    <!--<property name="host" value="${mongo.host}"/>-->
-    <!--<property name="port" value="${mongo.port}"/>-->
+    <!--<bean id="beanFactory" class="org.springframework.data.mongodb.core.MongoClientFactoryBean">-->
+        <!--<property name="host" value="${mongo.host}"/>-->
+        <!--<property name="port" value="${mongo.port}"/>-->
     <!--</bean>-->
 
     <!--<mongo:db-factory id="anotherMongoDbFactory" -->
-                      <!--host="localhost"-->
-                      <!--port="27017"-->
-                      <!--dbname="database"-->
-                      <!--username="joe"-->
-                      <!--password="secret" />-->
+    <!--host="localhost"-->
+    <!--port="27017"-->
+    <!--dbname="database"-->
+    <!--username="joe"-->
+    <!--password="secret" />-->
+
+
+    <bean id="readConverter" class="com.ryan.spring.data.mongo.PersonConverter"/>
+
+
+     
+    <!--<bean class="org.springframework.data.mongodb.gridfs.GridFsTemplate"></bean>-->
+
 </beans>
