@@ -1,7 +1,7 @@
 package com.ryan.spring.data.mongo;
 
 import com.mongodb.MongoClient;
-import com.ryan.spring.data.entity.Person;
+import com.ryan.spring.data.mongo.repo.entity.PersonEntity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,10 +51,10 @@ public class MongoTestCase {
     @Test
     public void testMongoQuery() throws Exception {
 
-        mongoOps.insert(new Person("Ryan", 28));
+        mongoOps.insert(new PersonEntity("Ryan", 28));
 
         Query query = new Query(where("name").is("Ryan"));
-        Person person = mongoOps.findOne(query, Person.class);
+        PersonEntity person = mongoOps.findOne(query, PersonEntity.class);
         LOG.info("{}", person.toString());
 
         mongoOps.dropCollection("person");
@@ -67,9 +67,9 @@ public class MongoTestCase {
      */
     @Test
     public void testMongoDbFactoryQuery() throws Exception {
-        mongoOps.insert(new Person("Ryan", 28));
+        mongoOps.insert(new PersonEntity("Ryan", 28));
 
-        Person person = mongoOps.findOne(new Query(where("name").is("Ryan")), Person.class);
+        PersonEntity person = mongoOps.findOne(new Query(where("name").is("Ryan")), PersonEntity.class);
         LOG.info("{}", person);
 
         mongoOps.dropCollection("person");
@@ -82,31 +82,31 @@ public class MongoTestCase {
      */
     @Test
     public void testMongoCrud() throws Exception {
-        Person p = new Person("Ryan", 27);
+        PersonEntity p = new PersonEntity("Ryan", 27);
 
         // Insert is used to initially store the object into the database.
         mongoOps.insert(p);
         LOG.info("Insert: " + p);
 
         // Find
-        p = mongoOps.findById(p.getId(), Person.class);
+        p = mongoOps.findById(p.getId(), PersonEntity.class);
         LOG.info("Found: " + p);
 
         // Update
         Query query = query(where("name").is("Ryan"));
-        mongoOps.updateFirst(query, update("age", 28), Person.class);
+        mongoOps.updateFirst(query, update("age", 28), PersonEntity.class);
 
-        p = mongoOps.findOne(query(where("name").is("Ryan")), Person.class);
+        p = mongoOps.findOne(query(where("name").is("Ryan")), PersonEntity.class);
         LOG.info("Updated: " + p);
 
         // Delete
         mongoOps.remove(p);
 
         // Check that deletion worked
-        List<Person> people = mongoOps.findAll(Person.class);
+        List<PersonEntity> people = mongoOps.findAll(PersonEntity.class);
         LOG.info("Number of people = : " + people.size());
 
-        mongoOps.dropCollection(Person.class);
+        mongoOps.dropCollection(PersonEntity.class);
     }
 
     /**
@@ -117,9 +117,9 @@ public class MongoTestCase {
     @Test
     public void testMongoNativeQuery() throws Exception {
         BasicQuery query = new BasicQuery("{ age : { $lt : 50 } }");
-        List<Person> result = mongoOps.find(query, Person.class);
+        List<PersonEntity> result = mongoOps.find(query, PersonEntity.class);
 
-        for (Person person : result) {
+        for (PersonEntity person : result) {
             LOG.info("{}", person);
         }
     }

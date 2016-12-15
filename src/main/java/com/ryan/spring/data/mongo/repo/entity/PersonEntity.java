@@ -1,6 +1,7 @@
-package com.ryan.spring.data.entity;
+package com.ryan.spring.data.mongo.repo.entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Id;
 
@@ -10,16 +11,18 @@ import javax.persistence.Id;
  * Created by Rayn on 2016/12/13 16:01.
  */
 @Document(collection="ryan")
-public class Person {
+public class PersonEntity {
 
     @Id
     private String id;
 
+    @Field("name")
     private String name;
 
+    @Field("age")
     private int age;
 
-    public Person(String name, int age) {
+    public PersonEntity(String name, int age) {
         this.name = name;
         this.age = age;
     }
