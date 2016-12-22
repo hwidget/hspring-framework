@@ -22,7 +22,7 @@
         <property name="propertiesArray">
             <array>
                 <ref bean="config"/>
-                <value type="java.lang.String">email.properties</value>
+                <value type="java.lang.String">conf/email.properties</value>
             </array>
         </property>
     </bean>
