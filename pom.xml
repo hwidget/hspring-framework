@@ -199,6 +199,7 @@
         <spring.batch.version>3.0.7.RELEASE</spring.batch.version>
         <spring.gemfire.version>1.8.5.RELEASE</spring.gemfire.version>
         <spring.oxm.version>3.2.2.RELEASE</spring.oxm.version>
+        <spring.session.version>1.2.2.RELEASE</spring.session.version>
 
         <spring.data.jpa.version>1.10.5.RELEASE</spring.data.jpa.version>
         <spring.data.commons.version>1.12.5.RELEASE</spring.data.commons.version>
@@ -215,6 +216,7 @@
         <querydsl.version>4.1.4</querydsl.version>
 
         <neo4j.ogm.version>2.1.0-M01</neo4j.ogm.version>
+
 
 
 
@@ -366,6 +368,14 @@
             <groupId>org.mongodb</groupId>
             <artifactId>bson</artifactId>
             <version>3.4.0</version>
+        </dependency>
+
+
+        <!--=============================================== Spring Batch =========================================================-->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session</artifactId>
+            <version>${spring.session.version}</version>
         </dependency>
 
 
