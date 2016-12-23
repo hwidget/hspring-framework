@@ -99,4 +99,7 @@
     <!--根据注解注入-->
     <context:annotation-config/>
 
+
+    <import resource="spring-websocket.xml" />
+
 </beans>
