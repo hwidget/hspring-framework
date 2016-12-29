@@ -2,7 +2,7 @@ package com.ryan.spring.freemarker;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-import com.ryan.spring.ClassUtils;
+import com.ryan.spring.utils.ClassUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
