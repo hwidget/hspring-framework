@@ -1,4 +1,4 @@
-package com.ryan.spring;
+package com.ryan.spring.data.jpa;
 
 
 import com.ryan.spring.web.blog.dao.UserInfoRepo;

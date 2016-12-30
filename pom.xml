@@ -503,6 +503,10 @@
                     <artifactId>slf4j-log4j12</artifactId>
                     <groupId>org.slf4j</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -567,6 +571,11 @@
         </dependency>
         <dependency>
             <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
             <artifactId>querydsl-sql-spring</artifactId>
             <version>${querydsl.version}</version>
         </dependency>
@@ -581,6 +590,13 @@
             <artifactId>querydsl-jpa</artifactId>
             <version>${querydsl.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql-codegen</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+
 
         <!--=============================================== Querydsl =========================================================-->
 
@@ -598,6 +614,11 @@
             <version>3.1.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -661,6 +682,7 @@
             <artifactId>freemarker</artifactId>
             <version>${freemarker.version}</version>
         </dependency>
+
 
     </dependencies>
 
