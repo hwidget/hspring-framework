@@ -2,11 +2,17 @@ package com.ryan.spring.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ryan.spring.web.common.AppException;
+import com.ryan.spring.web.entity.User;
+import com.ryan.spring.web.uitls.StringEscapeEditor;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.http.auth.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,21 +35,16 @@ import java.util.Map;
  * @email liuwei412552703@163.com
  * Created by Rayn on 2016/11/22 11:37.
  */
-@Controller
-@RequestMapping("/page")
-public class BaseController {
+public abstract class BaseController {
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseController.class);
 
-    /**
-     *
-     * @param pageName
-     * @return
-     */
-    @RequestMapping("/{pageName}.do")
-    public String goToPage(@PathVariable String pageName){
-        return pageName;
-    }
+    @Autowired
+    protected HttpServletRequest request;
+
+    @Autowired
+    protected HttpServletResponse response;
+
 
 
     /**
@@ -105,11 +106,97 @@ public class BaseController {
         binder.registerCustomEditor(Date.class, "startTime", new CustomDateEditor(datetimeFormat, true));
         binder.registerCustomEditor(Date.class, "endTime", new CustomDateEditor(datetimeFormat, true));
         binder.registerCustomEditor(Date.class, "createdAt", new CustomDateEditor(datetimeFormat, true));
+
+
+        binder.registerCustomEditor(String.class, new StringEscapeEditor(true));// html转义
     }
 
+    /**
+     * 初始化分页查询参数Page
+     *
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    protected Pageable initPage(Integer pageNo, Integer pageSize) {
+        // @RequestParam在处理不存在的参数时，赋值为null，基本类型无法为null，改为包装类型
+        if (pageNo == null) {
+            pageNo = 0;
+        }
+        if (pageSize == null) {
+            pageSize = 0;
+        }
+        pageNo = pageNo == 0 ? 0 : pageNo - 1;
+        pageSize = pageSize == 0 ? 10 : pageSize;
+        Pageable page = new PageRequest(pageNo, pageSize);
+        return page;
+    }
 
+    /**
+     * 初始化分页查询参数Page
+     *
+     * @param pageNo
+     * @param pageSize
+     * @param direction
+     * @param properties
+     * @return
+     */
+    protected Pageable initPage(Integer pageNo, Integer pageSize, Sort.Direction direction, String... properties) {
+        if (pageNo == null) {
+            pageNo = 0;
+        }
+        if (pageSize == null) {
+            pageSize = 0;
+        }
+        pageNo = pageNo == 0 ? 0 : pageNo - 1;
+        pageSize = pageSize == 0 ? 10 : pageSize;
+        Pageable page = new PageRequest(pageNo, pageSize, direction, properties);
+        return page;
+    }
 
+    /**
+     * 重定向到指定url
+     * @param url
+     * @return
+     */
+    protected String redirectTo(String url) {
+        StringBuilder rto = new StringBuilder("redirect:");
+        rto.append(url);
+        return rto.toString();
+    }
 
+    /**
+     * 获取项目根路径
+     * @return
+     */
+    protected String getContextPath() {
+        return request.getContextPath();
+    }
+
+    /**
+     * 设置用户
+     * @param user
+     */
+    protected void setUser(User user) {
+        request.getSession().setAttribute("user", user);
+    }
+
+    /**
+     * 获取用户
+     * @return
+     */
+    protected User getUser() {
+        User user = (User) request.getSession().getAttribute("user");
+        return user;
+    }
+
+    /**
+     * 移动用户
+     */
+    protected void removeUser() {
+        request.getSession().removeAttribute("user");
+        request.getSession().invalidate();
+    }
 
 
 }

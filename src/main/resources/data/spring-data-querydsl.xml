@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+
+	       http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+	       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+	       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+    <import resource="data-source.xml"/>
+
+
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <bean id="configuration" class="com.querydsl.sql.Configuration" >
+        <constructor-arg>
+            <bean id="mysqlTemplate" class="com.querydsl.sql.MySQLTemplates"></bean>
+        </constructor-arg>
+        <property name="exceptionTranslator">
+            <bean class="com.querydsl.sql.spring.SpringExceptionTranslator" />
+        </property>
+    </bean>
+
+    <bean id="connectionProvider" class="com.querydsl.sql.spring.SpringConnectionProvider" >
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="queryFactory" class="com.querydsl.sql.SQLQueryFactory" >
+        <constructor-arg index="0" type="com.querydsl.sql.Configuration" ref="configuration"/>
+        <constructor-arg index="1" type="javax.sql.DataSource" ref="dataSource"/>
+    </bean>
+
+
+</beans>
