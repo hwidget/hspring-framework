@@ -14,6 +14,11 @@
         <listener-class>com.ryan.spring.web.common.AppContextLoaderListener</listener-class>
     </listener>
 
+    <!-- 处理由JavaBeans,Introspector的使用而引起的缓冲泄露,建议配置此监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+
 
     <!--    Spring Session 实现Session分布式     -->
     <filter>
