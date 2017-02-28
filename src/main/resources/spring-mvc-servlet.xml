@@ -102,4 +102,6 @@
 
     <import resource="spring-websocket.xml" />
 
+
+    <context:component-scan base-package="com.ryan.spring" />
 </beans>

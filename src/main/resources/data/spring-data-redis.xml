@@ -95,4 +95,17 @@
         <constructor-arg name="redisOperations" ref="redisTemplate" />
     </bean>
 
+
+
+    <!-- ======================================= Spring Cache缓存管理器 BEGIN  ====================================== -->
+    <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+        <constructor-arg name="redisOperations" ref="redisTemplate" />
+        <property name="cachePrefix" value="cache-" />
+        <property name="usePrefix" value="true" />
+        <property name="loadRemoteCachesOnStartup" value="true" />
+    </bean>
+
+    <!-- 开启spring cache注解功能-->
+    <cache:annotation-driven cache-manager="redisCacheManager"/>
+
 </beans>
