@@ -228,6 +228,7 @@
         <spring.data.elasticsearch.version>2.0.5.RELEASE</spring.data.elasticsearch.version>
         <spring.kafka.version>1.1.1.RELEASE</spring.kafka.version>
 
+        <atomikos.version>4.0.4</atomikos.version>
 
         <spring.boot.yarn.version>2.4.0.RELEASE-hdp23</spring.boot.yarn.version>
 
@@ -242,7 +243,7 @@
         <hbase.version>1.2.4</hbase.version>
 
 
-        <druid.version>1.0.9</druid.version>
+        <druid.version>1.0.29</druid.version>
         <jetty.version>6.1.24</jetty.version>
 
         <redisson.version>2.8.0</redisson.version>
@@ -274,6 +275,17 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-jta</artifactId>
+            <version>${atomikos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-jdbc</artifactId>
+            <version>${atomikos.version}</version>
         </dependency>
 
         <!-- ===================================================================================================================== -->
@@ -647,7 +659,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.38</version>
+            <version>5.1.41</version>
         </dependency>
 
         <!-- lazyluke 输出sql-->
@@ -679,7 +691,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.21</version>
+            <version>1.2.29</version>
         </dependency>
 
         <dependency>
