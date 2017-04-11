@@ -14,13 +14,24 @@
 	   http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
 
-
-
     <import resource="classpath*:data/data-source.xml" />
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg index="0" ref="dataSource"/>
+        <property name="dataSource" ref="dataSource2" />
     </bean>
 
+    <bean id="jdbcTxUserService" class="com.ryan.spring.data.jdbc.service.impl.JdbcTxUserServiceImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+        <property name="rollbackOnCommitFailure" value="true" />
+        <property name="validateExistingTransaction" value="true" />
+        <property name="globalRollbackOnParticipationFailure" value="true" />
+        <property name="failEarlyOnGlobalRollbackOnly" value="true" />
+    </bean>
+
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"  />
 
 </beans>
