@@ -40,9 +40,14 @@ public class JdbcJtaTestCase {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:data/spring-data-jta-jdbctemplate.xml");
         jdbcTxUserService = applicationContext.getBean(JdbcTxUserService.class);
 
-        boolean success = jdbcTxUserService.disTxTest();
+        try {
+            boolean success = jdbcTxUserService.disTxTest();
 
-        LOG.info("执行结果: {}", success);
+            LOG.info("执行结果: {}", success);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
 
         while (true) {
             if (applicationContext.isRunning()) {

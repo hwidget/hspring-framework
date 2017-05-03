@@ -36,21 +36,21 @@
     </bean>
 
 
+    <bean id="userTransaction" class="com.atomikos.icatch.jta.J2eeUserTransaction">
+        <!--<property name="transactionTimeout" value="3000" />-->
+    </bean>
+
+    <bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init" destroy-method="close">
+        <property name="forceShutdown" value="true"/>
+    </bean>
+
     <!-- Atomikos JTA transaction manager -->
     <bean id="jtaTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
         <property name="allowCustomIsolationLevels" value="true"/>
-
-        <property name="transactionManager">
-            <bean class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init" destroy-method="close">
-                <property name="forceShutdown" value="false"/>
-            </bean>
-        </property>
-
-        <property name="userTransaction">
-            <bean class="com.atomikos.icatch.jta.J2eeUserTransaction">
-                <property name="transactionTimeout" value="300"/>
-            </bean>
-        </property>
+        <property name="autodetectTransactionManager" value="true" />
+        <property name="transactionManager" ref="atomikosTransactionManager" />
+        <property name="autodetectUserTransaction" value="true" />
+        <property name="userTransaction" ref="userTransaction" />
     </bean>
 
 

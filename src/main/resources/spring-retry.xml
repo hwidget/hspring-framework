@@ -8,11 +8,17 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 
+    <bean id="springRetryListener" class="com.ryan.spring.retry.SpringRetryListener">
+    </bean>
 
+
+    <bean id="timeoutRetryPolicy" class="org.springframework.retry.policy.TimeoutRetryPolicy">
+    </bean>
 
 
     <bean id="retryTemplate" class="org.springframework.retry.support.RetryTemplate">
-
+        <property name="listeners" ref="springRetryListener" />
+        <property name="retryPolicy" ref="timeoutRetryPolicy" />
     </bean>
 
 </beans>
