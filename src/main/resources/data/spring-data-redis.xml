@@ -56,16 +56,28 @@
         <property name="maxRedirects" value="2"/>
     </bean>
 
-
-    <!--<bean id="jedisClusterConnFactory" class="org.springframework.data.redis.connection.jedis.JedisClusterConnection">-->
-    <!--<constructor-arg name="cluster" ref="jedisCluster"/>-->
-    <!--</bean>-->
-
-
-    <bean id="messageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
-        <constructor-arg>
-            <bean class="com.ryan.spring.data.redis.pubsub.DefaultMessageDelegate"/>
+    <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
+        <constructor-arg name="nodes">
+            <set>
+                <value type="java.lang.String">127.0.0.1:6379</value>
+                <value type="java.lang.String">127.0.0.1:6379</value>
+            </set>
         </constructor-arg>
+        <constructor-arg name="timeout" value="3000" />
+    </bean>
+
+
+    <bean id="jedisClusterConnFactory" class="org.springframework.data.redis.connection.jedis.JedisClusterConnection">
+        <constructor-arg name="cluster" ref="jedisCluster"/>
+    </bean>
+
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="poolConfig" ref="jedisConfig" />
+    </bean>
+
+
+    <bean id=" messageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
+        <constructor-arg><bean class="com.ryan.spring.data.redis.pubsub.DefaultMessageDelegate"/></constructor-arg>
     </bean>
 
     <bean id="redisContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
@@ -83,7 +95,7 @@
 
     <!-- redis template definition -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
-        <property name="connectionFactory" ref="jedisConnFactory"/>
+        <property name="connectionFactory" ref="jedisClusterConnFactory"/>
     </bean>
 
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="10"/>
+        <property name="maxIdle" value="5"/>
+        <property name="maxWaitMillis" value="3000"/>
+        <!-- 向调用者输出“链接”资源时，是否检测是有有效，如果无效则从连接池中移除，并尝试获取继续获取。设为true，一个挂都不能用 -->
+        <property name="testOnBorrow" value="true"/>
+        <!-- 向连接池“归还”链接时，是否检测“链接”对象的有效性。 -->
+        <property name="testOnReturn" value="true"/>
+
+        <property name="numTestsPerEvictionRun" value="1024"/>
+        <property name="timeBetweenEvictionRunsMillis" value="30000"/>
+        <property name="minEvictableIdleTimeMillis" value="-1"/>
+        <property name="softMinEvictableIdleTimeMillis" value="10000"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="jmxEnabled" value="true"/>
+        <property name="blockWhenExhausted" value="false"/>
+    </bean>
+
+
+    <!--  哨兵方式配置Factory -->
+    <bean id="redisSentinelConf" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
+        <constructor-arg name="master" value="mymaster"/>
+        <constructor-arg name="sentinelHostAndPorts">
+            <set>
+                <value type="java.lang.String">192.168.1.235:26379</value>
+            </set>
+        </constructor-arg>
+    </bean>
+
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <constructor-arg name="sentinelConfig" ref="redisSentinelConf"/>
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+        <property name="usePool" value="true"/>
+        <property name="timeout" value="3000"/>
+    </bean>
+
+
+    <!-- redis template definition -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+    </bean>
+</beans>
