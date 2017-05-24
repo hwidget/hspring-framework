@@ -26,18 +26,20 @@ import java.util.*;
 public class RedisSentinelTestCase {
     private static final Logger LOG = LoggerFactory.getLogger(RedisSentinelTestCase.class);
 
-
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
-
     @Test
     public void testRandomWrite() throws Exception {
-        ValueOperations<String, String> operations = this.redisTemplate.opsForValue();
-
+        ValueOperations<String, String> operations = null;
         while (true){
-            operations.set(UUID.randomUUID().toString(), "1");
-
+            try {
+                operations = this.redisTemplate.opsForValue();
+                operations.set(UUID.randomUUID().toString(), "1");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            LOG.info("正在写入数据……当前时间:{}", System.currentTimeMillis());
             Thread.sleep(3 * 1000);
         }
 
