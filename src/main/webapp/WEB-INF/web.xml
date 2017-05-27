@@ -33,7 +33,6 @@
     </filter-mapping>
 
 
-
     <!--使用 tomcat 默认servlet 处理静态资源目录-->
     <servlet-mapping>
         <servlet-name>default</servlet-name>
@@ -129,6 +128,27 @@
         <filter-name>OpenSessionInViewFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+
+    <!-- =============================================== sitemesh 配置 ============================================== -->
+    <!--<filter>-->
+        <!--<filter-name>sitemesh</filter-name>-->
+        <!--&lt;!&ndash;<filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>&ndash;&gt;-->
+        <!--<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>sitemesh</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+    <filter>
+        <filter-name>sitemesh</filter-name>
+        <filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>sitemesh</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <session-config>
         <session-timeout>120</session-timeout>
