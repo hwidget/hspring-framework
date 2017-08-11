@@ -39,6 +39,13 @@ public class MongoIndexTestCase {
         mongoTemplate.indexOps(PersonEntity.class).ensureIndex(new Index().on("age", Sort.Direction.DESC).unique(Index.Duplicates.DROP));
         List<IndexInfo> indexInfoList = mongoTemplate.indexOps(PersonEntity.class).getIndexInfo();
 
+        for (IndexInfo indexInfo : indexInfoList) {
+            LOG.info("{} == {}", indexInfo.getIndexFields(), indexInfo.getName());
+        }
+
+
+
+
         mongoTemplate.indexOps(PersonEntity.class).ensureIndex(new GeospatialIndex("location"));
 
     }

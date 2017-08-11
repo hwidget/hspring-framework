@@ -25,20 +25,10 @@
                        slave-ok="true"
                        write-number="1"
                        write-timeout="0"
-                       write-fsync="true"/>
+                       write-fsync="true"></mongo:options>
     </mongo:mongo>
 
-    <mongo:mongo id="replicaSetMongo" replica-set="${mongo.host.replica}"/>
-
-
-    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        <constructor-arg index="0" type="com.mongodb.Mongo" ref="mongo"/>
-        <constructor-arg index="1" type="java.lang.String" value="${mongo.dbname}"/>
-
-        <!--<constructor-arg name="mongo" type="com.mongodb.Mongo" ref="mongo"/>-->
-        <!--<constructor-arg name="databaseName" type="java.lang.String" value="${mongo.dbname}"/>-->
-        <!--<constructor-arg name="mongoConverter" ref="readConverter" />-->
-    </bean>
+    <mongo:mongo id="replicaSetMongo" replica-set="${mongo.host.replica}"></mongo:mongo>
 
 
     <!--<mongo:db-factory dbname="${mongo.dbname}" mongo-ref="mongo" />-->
@@ -56,10 +46,57 @@
     <!--password="secret" />-->
 
 
-    <bean id="readConverter" class="com.ryan.spring.data.mongo.PersonConverter"/>
+    <bean id="userCredentials" class="org.springframework.data.authentication.UserCredentials">
+        <constructor-arg name="username" value="${mongo.username}"/>
+        <constructor-arg name="password" value="${mongo.password}"/>
+    </bean>
+
+    <bean id="mongoDbFactory" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+        <constructor-arg name="mongo" ref="mongo"/>
+        <constructor-arg name="databaseName" value="${mongo.dbName}"/>
+        <constructor-arg name="credentials" ref="userCredentials"/>
+    </bean>
 
 
-     
-    <!--<bean class="org.springframework.data.mongodb.gridfs.GridFsTemplate"></bean>-->
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg index="0" type="com.mongodb.Mongo" ref="mongo"></constructor-arg>
+        <constructor-arg index="1" type="java.lang.String" value="${mongo.dbname}"></constructor-arg>
+
+        <!--<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>-->
+
+        <!--<constructor-arg name="mongo" type="com.mongodb.Mongo" ref="mongo"/>-->
+        <!--<constructor-arg name="databaseName" type="java.lang.String" value="${mongo.dbname}"/>-->
+        <!--<constructor-arg name="mongoConverter" ref="readConverter" />-->
+    </bean>
+
+    <bean id="readConverter" class="com.ryan.spring.data.mongo.PersonConverter"></bean>
+
+
+    <!-- ====================================================== Grid Template =============================================================   -->
+    <bean id="mappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+
+    <!-- 默认Mongodb类型映射 -->
+    <bean id="defaultMongoTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+        <constructor-arg name="typeKey">
+            <null/>
+            <!-- 这里设置为空,可以把 spring data mongodb 多余保存的_class字段去掉 -->
+        </constructor-arg>
+    </bean>
+
+    <!-- 配置mongodb映射类型 -->
+    <bean id="mappingMongoConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="mappingContext" ref="mappingContext"/>
+        <property name="typeMapper" ref="defaultMongoTypeMapper"/>
+    </bean>
+
+    <!-- MongoDB GridFS Template -->
+    <bean id="gridTemplate" class="org.springframework.data.mongodb.gridfs.GridFsTemplate">
+        <constructor-arg ref="mongoDbFactory"/>
+        <constructor-arg ref="mappingMongoConverter"/>
+    </bean>
+
+    <!-- ======================================================= Grid Template ============================================================   -->
+
 
 </beans>

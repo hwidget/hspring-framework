@@ -13,9 +13,11 @@ import org.springframework.data.mongodb.core.ScriptOperations;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.mongodb.core.script.ExecutableMongoScript;
 import org.springframework.data.mongodb.core.script.NamedMongoScript;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -31,7 +33,7 @@ public class MongoTestCase {
 
     private static final Logger LOG = LoggerFactory.getLogger(MongoTestCase.class);
 
-    private MongoOperations mongoOps;
+    private MongoTemplate mongoOps;
 
     @Before
     public void setUp() throws Exception {
@@ -50,10 +52,15 @@ public class MongoTestCase {
      */
     @Test
     public void testMongoQuery() throws Exception {
+        PersonEntity p = new PersonEntity("t-" + System.currentTimeMillis(), "Ryan", 28, new Double[]{120d, 30d}, System.currentTimeMillis());
+//        mongoOps.insert(p);
 
-        mongoOps.insert(new PersonEntity("Ryan", 28));
+        Query query = new Query(where("_id").is("t-" + System.currentTimeMillis()));
+        Update update = new Update();
+        update.set("school", "交通大学");
+        mongoOps.upsert(query, update, p.getClass());
 
-        Query query = new Query(where("name").is("Ryan"));
+        query = new Query(where("name").is("Ryan"));
         PersonEntity person = mongoOps.findOne(query, PersonEntity.class);
         LOG.info("{}", person.toString());
 
@@ -100,13 +107,15 @@ public class MongoTestCase {
         LOG.info("Updated: " + p);
 
         // Delete
-        mongoOps.remove(p);
+        LOG.info("执行删除开始！");
+//        mongoOps.remove(p);
+        LOG.info("执行删除结束！");
 
         // Check that deletion worked
         List<PersonEntity> people = mongoOps.findAll(PersonEntity.class);
         LOG.info("Number of people = : " + people.size());
 
-        mongoOps.dropCollection(PersonEntity.class);
+//        mongoOps.dropCollection(PersonEntity.class);
     }
 
     /**

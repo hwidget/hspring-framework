@@ -1,12 +1,14 @@
 package com.ryan.spring.data.mongo.repo.entity;
 
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * @author Rayn
@@ -23,9 +25,16 @@ public class PersonEntity implements Serializable {
     private String name;
 
     @Field("age")
-    private int age;
+    private Integer age;
 
-    private double[] location;
+    @GeoSpatialIndexed(name = "location")
+    private Double [] location;
+
+    @Field("createdAt")
+    private Long createdAt;
+
+    @Field("address")
+    private String address = "北京";
 
     @PersistenceConstructor
     public PersonEntity(String id, String name) {
@@ -40,18 +49,20 @@ public class PersonEntity implements Serializable {
     }
 
     @PersistenceConstructor
-    public PersonEntity(String name, int age, double[] location) {
+    public PersonEntity(String id, String name, Integer age, Double[] location, Long createdAt) {
+        this.id = "t-1502446835378";
         this.name = name;
         this.age = age;
         this.location = location;
+        this.createdAt = createdAt;
     }
 
-    @PersistenceConstructor
-    public PersonEntity(String name, int age, double x, double y) {
-        this.name = name;
-        this.age = age;
-        this.location = new double[]{x, y};
-    }
+//    @PersistenceConstructor
+//    public PersonEntity(String name, int age, Double x, Double y) {
+//        this.name = name;
+//        this.age = age;
+//        this.location = new double[]{x, y};
+//    }
 
     public String getId() {
         return id;
@@ -77,14 +88,21 @@ public class PersonEntity implements Serializable {
         this.age = age;
     }
 
-    public double[] getLocation() {
+    public Double[] getLocation() {
         return location;
     }
 
-    public void setLocation(double[] location) {
+    public void setLocation(Double[] location) {
         this.location = location;
     }
 
+    public long getCreatedAt() {
+        return System.currentTimeMillis();
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
 
     @Override
     public String toString() {

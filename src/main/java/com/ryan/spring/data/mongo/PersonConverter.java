@@ -16,12 +16,11 @@ public class PersonConverter implements Converter<Document, PersonEntity> {
 
     private static final Logger LOG = LoggerFactory.getLogger(PersonConverter.class);
 
-
-
     @Override
     public PersonEntity convert(Document document) {
         PersonEntity p = new PersonEntity((String) document.get("_id"), (String) document.get("name"));
-        p.setAge((Integer) document.get("age"));
+        p.setAge(document.getInteger("age"));
+        p.setName(document.getString("name"));
         return p;
     }
 }
