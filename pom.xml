@@ -241,6 +241,7 @@
 
         <hbase.version>1.2.4</hbase.version>
 
+        <mx4j.version>3.0.1</mx4j.version>
 
         <druid.version>1.0.29</druid.version>
         <jetty.version>6.1.24</jetty.version>
@@ -614,8 +615,27 @@
         </dependency>
 
 
-        <!--=============================================== Querydsl =========================================================-->
+        <!--=============================================== Querydsl End  =========================================================-->
 
+
+        <!--=============================================== mx4j  =========================================================-->
+        <dependency>
+            <groupId>mx4j</groupId>
+            <artifactId>mx4j-remote</artifactId>
+            <version>${mx4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mx4j</groupId>
+            <artifactId>mx4j-tools</artifactId>
+            <version>${mx4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mx4j</groupId>
+            <artifactId>mx4j-jmx-remote</artifactId>
+            <version>${mx4j.version}</version>
+        </dependency>
+        <!--=============================================== Querydsl =========================================================-->
 
         <dependency>
             <groupId>jstl</groupId>
