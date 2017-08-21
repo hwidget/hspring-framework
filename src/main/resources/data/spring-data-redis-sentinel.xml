@@ -31,6 +31,17 @@
                 <value type="java.lang.String">192.168.1.235:26379</value>
             </set>
         </constructor-arg>
+		<property name="sentinels">
+            <set>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+<!--                     <constructor-arg name="host" value="10.5.63.19" /> -->
+<!--                     <constructor-arg name="port" value="26379" /> -->
+                    
+                    <constructor-arg name="host" value="192.168.31.27" />
+                    <constructor-arg name="port" value="26400" />
+                </bean>
+            </set>
+        </property>
     </bean>
 
     <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">

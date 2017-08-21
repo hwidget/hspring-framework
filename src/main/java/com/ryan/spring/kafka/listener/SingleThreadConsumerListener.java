@@ -21,6 +21,10 @@ public class SingleThreadConsumerListener implements MessageListener<Integer, St
     @Override
     public void onMessage(ConsumerRecord<Integer, String> record) {
 
-        LOG.info("接收到消息:{}", record.value());
+        try {
+            LOG.info("接收到消息:{}", record.value());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

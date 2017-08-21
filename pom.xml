@@ -497,7 +497,11 @@
             <artifactId>spring-kafka</artifactId>
             <version>${spring.kafka.version}</version>
         </dependency>
-
+        <!--<dependency>-->
+            <!--<groupId>org.apache.kafka</groupId>-->
+            <!--<artifactId>kafka_2.11</artifactId>-->
+            <!--<version>0.10.0.1</version>-->
+        <!--</dependency>-->
 
         <!--=============================================== Spring Retry  Hadoop =========================================================-->
         <dependency>
