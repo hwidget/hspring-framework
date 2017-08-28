@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="httpService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="service">
+            <ref bean="ucService"/>
+        </property>
+        <property name="serviceInterface" value="com.ryan.spring.invoker.service.UserInfoService">
+        </property>
+    </bean>
+
+    <bean id="ucService" class="com.ryan.spring.invoker.service.impl.UserInfoServiceImpl"/>
+
+    <!-- 说明： HttpInvokerServiceExporter 实际上是一个 spring mvc 控制器，它处理客户端的请求并调用服务实现。
+    ² WEB-INF/service-servlet.xml ： HttpInvokerServiceExporter 实际上是一个 spring mvc 控制器，所以需要为其 提供 spring URL 处理器，这里我们使用 SimpleUrlHandlerMapping -->
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/httpService">httpService</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>
