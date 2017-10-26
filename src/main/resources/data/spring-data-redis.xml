@@ -22,8 +22,8 @@
         <property name="database" value="0"/>
         <property name="poolConfig" ref="jedisConfig"/>
         <property name="usePool" value="true"/>
-        <property name="port" value="6379"/>
-        <property name="hostName" value="127.0.0.1"/>
+        <property name="port" value="9999"/>
+        <property name="hostName" value="192.168.1.235"/>
         <property name="timeout" value="3000"/>
     </bean>
 
@@ -95,7 +95,7 @@
 
     <!-- redis template definition -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
-        <property name="connectionFactory" ref="jedisClusterConnFactory"/>
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
     </bean>
 
 

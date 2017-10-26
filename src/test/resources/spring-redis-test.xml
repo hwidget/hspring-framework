@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:batch-int="http://www.springframework.org/schema/batch-integration"
+       xsi:schemaLocation="http://www.springframework.org/schema/batch-integration
+    http://www.springframework.org/schema/batch-integration/spring-batch-integration.xsd
+    http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+    <bean id="jedisConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="100"/>
+        <property name="minIdle" value="5" />
+        <property name="testOnBorrow" value="true"/>
+        <property name="maxWaitMillis" value="5000"/>
+        <property name="maxIdle" value="30000" />
+        <property name="timeBetweenEvictionRunsMillis" value="10000" />
+        <!-- 打开后，redis client 为 110 左右 -->
+        <!--<property name="blockWhenExhausted" value="true" />-->
+        <!-- 关闭后，redis client 为 200+ 左右 -->
+        <property name="blockWhenExhausted" value="false" />
+    </bean>
+
+
+    <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="database" value="0"/>
+        <property name="poolConfig" ref="jedisConfig"/>
+        <property name="usePool" value="true"/>
+        <property name="port" value="9999"/>
+        <property name="hostName" value="192.168.1.235"/>
+        <property name="timeout" value="3000"/>
+    </bean>
+
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnFactory"/>
+    </bean>
+
+</beans>

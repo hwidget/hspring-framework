@@ -226,6 +226,7 @@
         <spring.data.hadoop.version>2.4.0.RELEASE</spring.data.hadoop.version>
         <spring.data.elasticsearch.version>2.0.5.RELEASE</spring.data.elasticsearch.version>
         <spring.kafka.version>1.1.1.RELEASE</spring.kafka.version>
+        <spring.data.solr.version>4.7.2</spring.data.solr.version>
 
         <atomikos.version>4.0.4</atomikos.version>
 
@@ -550,6 +551,21 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-yarn-boot</artifactId>
             <version>${spring.boot.yarn.version}</version>
+        </dependency>
+
+
+
+        <!--=============================================== Spring Data Solr =========================================================-->
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>${solr.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.woodstox</groupId>
+                    <artifactId>wstx-asl</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
