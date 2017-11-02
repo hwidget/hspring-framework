@@ -1,10 +1,11 @@
 package com.ryan.spring.data.mongo;
 
-import com.mongodb.*;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.Mongo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.net.UnknownHostException;
 
 /**
  * <pre>
@@ -14,46 +15,41 @@ import java.net.UnknownHostException;
  * Version      V1.0
  * Discription:
  */
-public class MongoCappedCollection {
+public class MongoCappedCollection extends AbstractMongo {
 
     private static final Logger LOG = LoggerFactory.getLogger(MongoCappedCollection.class);
 
-    private String db = "test";
-    private String cappedCollect = "cappedCollect";
-
-    private String host = "192.168.1.115";
-    private int port = 8888;
-
-    private Mongo mongoClient;
-
     public MongoCappedCollection() {
-        try {
-            this.mongoClient = new MongoClient(host, port);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        collectionName = "cappedCollect";
     }
 
+    /**
+     *
+     */
+    @Override
+    public void exec() {
+
+    }
 
     /**
      * 创建固定集合
      */
-    public void createCappedCollect(){
+    public void createCappedCollect() {
         DB db = this.mongoClient.getDB(this.db);
         BasicDBObject dbObject = new BasicDBObject();
         dbObject.append("size", 100000);
         dbObject.append("capped", true);
         dbObject.append("max", 5000);
 
-        db.createCollection(cappedCollect, dbObject);
+        db.createCollection(collectionName, dbObject);
     }
 
     /**
      * 批量插入
      */
-    public void multiInsert(){
+    public void multiInsert() {
         DB db = this.mongoClient.getDB(this.db);
-        DBCollection collection = db.getCollection(cappedCollect);
+        DBCollection collection = db.getCollection(collectionName);
 
         boolean capped = collection.isCapped();
         LOG.info("Collection is capped : {}", capped);
@@ -69,7 +65,6 @@ public class MongoCappedCollection {
             collection.insert(basicDBObject);
         }
     }
-
 
 
     public static void main(String[] args) {
