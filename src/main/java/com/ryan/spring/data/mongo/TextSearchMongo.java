@@ -43,6 +43,12 @@ public class TextSearchMongo extends AbstractMongo {
      *
      */
     public void textSearch(){
+//        db.stores.find(
+//                { $text: { $search: "java coffee shop" } },
+//        { score: { $meta: "textScore" } }
+//        ).sort( { score: { $meta: "textScore" } } )
+
+
 
     }
 
