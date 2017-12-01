@@ -29,12 +29,8 @@ public abstract class AbstractMongo {
     }
 
     public AbstractMongo(String collectionName) {
-        try {
-            this.collectionName = collectionName;
-            this.mongoClient = new MongoClient(host, port);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        this.collectionName = collectionName;
+        this.mongoClient = new MongoClient(host, port);
     }
 
     /**

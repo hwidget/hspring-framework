@@ -228,6 +228,11 @@
         <spring.kafka.version>1.1.1.RELEASE</spring.kafka.version>
         <spring.data.solr.version>4.7.2</spring.data.solr.version>
 
+
+        <solr.version>4.7.2</solr.version>
+
+        <sharding.jdbc.version>1.5.4.1</sharding.jdbc.version>
+
         <atomikos.version>4.0.4</atomikos.version>
 
         <spring.boot.yarn.version>2.4.0.RELEASE-hdp23</spring.boot.yarn.version>
@@ -666,6 +671,25 @@
             <version>${mx4j.version}</version>
         </dependency>
         <!--=============================================== Querydsl =========================================================-->
+
+        <!--=============================================== sharding jdbc =========================================================-->
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>sharding-jdbc-core</artifactId>
+            <version>${sharding.jdbc.version}</version>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>com.alibaba.cobar</groupId>
+            <artifactId>cobar-client</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <!--=============================================== sharding jdbc =========================================================-->
+
+
+
 
         <dependency>
             <groupId>jstl</groupId>
