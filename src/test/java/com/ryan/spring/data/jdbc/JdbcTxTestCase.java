@@ -1,6 +1,5 @@
 package com.ryan.spring.data.jdbc;
 
-import com.ryan.spring.data.jdbc.service.JdbcTxUserService;
 import com.ryan.spring.data.jdbc.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * Discription:
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-data-tx-test.xml"})
+@ContextConfiguration(locations = {"classpath:data/spring-data-tx-test.xml"})
 public class JdbcTxTestCase {
 
     private static final Logger LOG = LoggerFactory.getLogger(JdbcTxTestCase.class);
