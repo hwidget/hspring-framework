@@ -2,6 +2,13 @@ package com.ryan.spring.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanInitializationException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +21,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/page")
-public class HomeController extends BaseController {
+public class HomeController extends BaseController implements EnvironmentAware, ApplicationContextAware {
 
     private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
 
+    private Environment env = null;
+
+    private ApplicationContext applicationContext = null;
+
+    /**
+     * Set the {@code Environment} that this object runs in.
+     *
+     * @param environment
+     */
+    @Override
+    public void setEnvironment(Environment environment) {
+        this.env = environment;
+    }
+
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 
     /**
      *
