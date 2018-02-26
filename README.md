@@ -54,3 +54,10 @@ CircuitBreakerRetryPolicy需要配置三个参数：
     * delegate：是真正判断是否重试的策略，当重试失败时，则执行熔断策略；
     * openTimeout：openWindow，配置熔断器电路打开的超时时间，当超过openTimeout之后熔断器电路变成半打开状态（主要有一次重试成功，则闭合电路）；
     * resetTimeout：timeout，配置重置熔断器重新闭合的超时时间。
+
+# Spring Kafka 模块
+
+
+# Spring 源码刨析
+1. BeanWarp 强大的 Bean 操作类；
+2. ApplicationContextAware  感知接口；

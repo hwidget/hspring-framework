@@ -1,5 +1,6 @@
-package com.ryan.spring.vo;
+package com.ryan.spring.app;
 
+import com.ryan.spring.vo.PersonVo;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.beans.PropertyValue;
