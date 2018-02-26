@@ -15,22 +15,27 @@ Spring Framework
 # 中文乱码过滤器
 
 ① 指定 Log4J 配置文件的地址
-<context-param>
-    <param-name>log4jConfigLocation</param-name>
-    <param-value>/WEB-INF/log4j.properties</param-value>
-</context-param>
+
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/log4j.properties</param-value>
+    </context-param>
+
 ② 使用该监听器初始化 Log4J 日志引擎
-<listener>
-    <listener-class>
-    org.springframework.web.util.Log4jConfigListener
-    </listener-class>
-</listener>
+
+    <listener>
+        <listener-class>
+        org.springframework.web.util.Log4jConfigListener
+        </listener-class>
+    </listener>
+
 Introspector 缓存清除监听器,防止内存泄露
-<listener>
-    <listener-class>
-    org.springframework.web.util.IntrospectorCleanupListener
-    </listener-class>
-</listener>
+
+    <listener>
+        <listener-class>
+        org.springframework.web.util.IntrospectorCleanupListener
+        </listener-class>
+    </listener>
 
 # Spring Retry 模块
 RetryPolicy提供了如下策略实现：
@@ -51,6 +56,7 @@ BackOffPolicy 提供了如下策略实现：
     * ExponentialRandomBackOffPolicy：随机指数退避策略，引入随机乘数，之前说过固定乘数可能会引起很多服务同时重试导致DDos，使用随机休眠时间来避免这种情况。
 
 CircuitBreakerRetryPolicy需要配置三个参数：
+
     * delegate：是真正判断是否重试的策略，当重试失败时，则执行熔断策略；
     * openTimeout：openWindow，配置熔断器电路打开的超时时间，当超过openTimeout之后熔断器电路变成半打开状态（主要有一次重试成功，则闭合电路）；
     * resetTimeout：timeout，配置重置熔断器重新闭合的超时时间。
